@@ -1,0 +1,27 @@
+{
+  "name": "modular_backend",
+  "version": "1.0.0",
+  "description": "Backend del proyecto modular",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diego142/modular_backend.git"
+  },
+  "author": "Diego Frias",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diego142/modular_backend/issues"
+  },
+  "homepage": "https://github.com/diego142/modular_backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
