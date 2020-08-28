@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const { mongoose } = require('./database/db');
+
 const app = express();
 
 // Settings
@@ -11,7 +13,7 @@ app.use(cors());
 app.use(express.urlencoded({extended: false}));
 
 // Routes
-//app.use(require('./routes/index'));
+app.use(require('./routes/index'));
 
 // Starting server
 app.listen(app.get('port'), () => {
