@@ -15,7 +15,7 @@ UserCtrl.getAll = (req, res) => {
 UserCtrl.getByEmail = (req, res) => {
     const email = req.params.email;
 
-    User.find({ email: email })
+    User.findOne({ email: email })
         .then(result => {
             res.json(new Response(result, true, 'success'));
         })
@@ -41,7 +41,7 @@ UserCtrl.update = (req, res) => {
     const id = req.body._id;
     const user = req.body;
 
-    User.findByIdAndUpdate(id, { $set: user })
+    User.find(id, { $set: user })
         .then(result => {
             res.json(new Response(user, true, 'success'));
         }).catch(err => {
