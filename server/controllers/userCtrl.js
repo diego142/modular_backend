@@ -36,11 +36,25 @@ UserCtrl.create = (req, res) => {
         });
 };
 
+
+UserCtrl.update = (req, res) => {
+    const id = req.body._id;
+    const user = req.body;
+
+    User.findByIdAndUpdate(id, { $set: user })
+        .then(result => {
+            res.json(new Response(user, true, 'success'));
+        }).catch(err => {
+            res.json(new Response(err, false, err.message));
+        });
+};
+
 UserCtrl.delete = (req, res) => {
     const id = req.params.id;
 
     User.findByIdAndUpdate(id, { $set: { active: false } })
         .then(result => {
+            result.active = false;
             res.json(new Response(result, true, 'success'));
         }).catch(err => {
             res.json(new Response(err, false, err.message));
