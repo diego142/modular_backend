@@ -10,7 +10,7 @@ const UserSchema = new Schema({
     career: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    active: { type: String, required: true }
+    active: { type: Boolean, required: true }
 });
 
 module.exports = mongoose.model('User', UserSchema);

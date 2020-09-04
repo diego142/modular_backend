@@ -1,33 +1,10 @@
-const User = require('../database/user');
+const Event = require('../database/event');
 const Response = require('../models/response');
 
-const UserCtrl = {};
+const EventCtrl = {};
 
-UserCtrl.getAll = (req, res) => {
-    User.find({ active: true })
-        .then(result => {
-            res.json(new Response(result, true, 'success'));
-        }).catch(err => {
-            res.json(new Response(err, false, err.message));
-        });
-};
-
-UserCtrl.getByEmail = (req, res) => {
-    const email = req.params.email;
-
-    User.findOne({ email: email })
-        .then(result => {
-            res.json(new Response(result, true, 'success'));
-        })
-        .catch(err => {
-            res.json(new Response(err, false, ''));
-        });
-};
-
-UserCtrl.create = (req, res) => {
-    const user = new User(req.body);
-
-    user.save()
+EventCtrl.getAll = (req, res) => {
+    Event.find({ open: true }).populate("user")
         .then(result => {
             res.json(new Response(result, true, 'success'));
         })
@@ -36,29 +13,53 @@ UserCtrl.create = (req, res) => {
         });
 };
 
-UserCtrl.update = (req, res) => {
-    const id = req.body._id;
-    const user = req.body;
-
-    User.find(id, { $set: user })
-        .then(result => {
-            res.json(new Response(user, true, 'success'));
-        }).catch(err => {
-            res.json(new Response(err, false, err.message));
-        });
-};
-
-UserCtrl.delete = (req, res) => {
+EventCtrl.getByUserId = (req, res) => {
     const id = req.params.id;
 
-    User.findByIdAndUpdate(id, { $set: { active: false } })
+    Event.find({ user: id })
         .then(result => {
-            result.active = false;
             res.json(new Response(result, true, 'success'));
-        }).catch(err => {
+        })
+        .catch(err => {
             res.json(new Response(err, false, err.message));
         });
 };
 
+EventCtrl.create = (req, res) => {
+    const event = new Event(req.body);
 
-module.exports = UserCtrl;
+    event.save()
+        .then(result => {
+            res.json(new Response(result, true, 'success'));
+        })
+        .catch(err => {
+            res.json(new Response(err, false, err.message));
+        });
+};
+
+EventCtrl.update = (req, res) => {
+    const id = req.body._id;
+    const event = req.body;
+
+    Event.findByIdAndUpdate(id, { $set: event })
+        .then(result => {
+            res.json(new Response(event, true, 'success'));
+        })
+        .catch(err => {
+            res.json(new Response(err, false, err.message));
+        });
+};
+
+EventCtrl.close = (req, res) => {
+    const id = req.params.id;
+
+    Event.findByIdAndUpdate(id, { $set: { open: false } })
+        .then(result => {
+            res.json(new Response(result, true, 'success'));
+        })
+        .catch(err => {
+            res.json(new Response(err, false, err.message));
+        });
+};
+
+module.exports = EventCtrl;
