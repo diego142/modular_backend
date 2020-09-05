@@ -85,7 +85,7 @@ QuestionCtrl.modifyReply = (req, res) => {
 
     const reply = req.body;
 
-    Question.updateOne({'_id': id, 'replys._id': id_reply }, { $set: { 'replys.$': reply} })// replys {reply: reply} yo digo alv
+    Question.updateOne({'_id': id, 'replys._id': id_reply }, { $set: { 'replys.$': reply} })
         .then(result => {
             res.json(new Response(reply, true, 'success'));
         })

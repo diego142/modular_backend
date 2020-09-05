@@ -25,6 +25,18 @@ EventCtrl.getByUserId = (req, res) => {
         });
 };
 
+EventCtrl.getById = (req, res) => {
+    const id = req.params.id;
+
+    Event.findById(id)
+        .then(result => {
+            res.json(new Response(result, true, 'success'));
+        })
+        .catch(err => {
+            res.json(new Response(err, false, err.message));
+        });
+};
+
 EventCtrl.create = (req, res) => {
     const event = new Event(req.body);
 

@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get('/', userCtrl.getAll);
 router.get('/:email', userCtrl.getByEmail);
+router.get('/id/:id', userCtrl.getById);
 router.put('/', userCtrl.update);
 router.post('/', userCtrl.create);
 router.delete('/:id', userCtrl.delete);

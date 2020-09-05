@@ -15,7 +15,19 @@ UserCtrl.getAll = (req, res) => {
 UserCtrl.getByEmail = (req, res) => {
     const email = req.params.email;
 
-    User.findOne({ email: email })
+    User.findOne({ email: email, active: true })
+        .then(result => {
+            res.json(new Response(result, true, 'success'));
+        })
+        .catch(err => {
+            res.json(new Response(err, false, ''));
+        });
+};
+
+UserCtrl.getById = (req, res) => {
+    const id = req.params.id;
+
+    User.findOne({_id: id, active: true})
         .then(result => {
             res.json(new Response(result, true, 'success'));
         })
