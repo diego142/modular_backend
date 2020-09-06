@@ -80,8 +80,6 @@ QuestionCtrl.removeReply = (req, res) => {
     const id = req.params.id;
     const reply = req.params.id_reply;
 
-    console.log(id, reply);
-
     Question.findByIdAndUpdate(id, { $pull: { replys: { _id: reply } } })
         .then(result => {
             res.json(new Response(reply, true, 'success'));
