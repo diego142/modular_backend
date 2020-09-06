@@ -4,7 +4,8 @@ const questionCtrl = require('../controllers/questionCtrl');
 const router = express.Router();
 
 router.get('/', questionCtrl.getAll);
-router.get('/:id', questionCtrl.getByUserId);
+router.get('/user/:id', questionCtrl.getByUserId);
+router.get('/:id', questionCtrl.getById);
 router.post('/', questionCtrl.create);
 router.put('/', questionCtrl.update);
 router.put('/:id', questionCtrl.addReply); // id de la pregunta

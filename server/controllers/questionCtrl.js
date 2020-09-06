@@ -25,6 +25,18 @@ QuestionCtrl.getByUserId = (req, res) => {
         });
 };
 
+QuestionCtrl.getById = (req, res) => {
+    const id = req.params.id;
+
+    Question.findOne({ _id: id }).populate('user').populate('replys.user')
+        .then(result => {
+            res.json(new Response(result, true, 'success'));
+        })
+        .catch(err => {
+            res.json(new Response(err, false, err.message));
+        });
+};
+
 QuestionCtrl.create = (req, res) => {
     const question = new Question(req.body);
 
