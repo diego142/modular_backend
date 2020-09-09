@@ -16,7 +16,7 @@ QuestionCtrl.getAll = (req, res) => {
 QuestionCtrl.getByUserId = (req, res) => {
     const id = req.params.id;
 
-    Question.findOne({ user: id }).populate('user').populate('replys.user')
+    Question.find({ user: id }).populate('user').populate('replys.user')
         .then(result => {
             res.json(new Response(result, true, 'success'));
         })
@@ -56,6 +56,18 @@ QuestionCtrl.update = (req, res) => {
     Question.findByIdAndUpdate(id, { $set: question })
         .then(result => {
             res.json(new Response(question, true, 'success'));
+        })
+        .catch(err => {
+            res.json(new Response(err, false, err.message));
+        });
+};
+
+QuestionCtrl.close = (req, res) => {
+    const id = req.params.id;
+
+    Question.findByIdAndUpdate(id, { $set: { open: false } })
+        .then(result => {
+            res.json(new Response(result, true, 'success'));
         })
         .catch(err => {
             res.json(new Response(err, false, err.message));

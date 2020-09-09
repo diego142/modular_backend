@@ -1,13 +1,23 @@
 const Tag = require('../database/tag');
+const User = require('../database/user');
 const Response = require('../models/response');
 const { request } = require('express');
 
 const TagCtrl = {};
 
 TagCtrl.getAll = (req, res) => {
-    Tag.find({}).populate('tags')
-        .then(result => {
-            res.json(new Response(result, true, 'success'));
+    Tag.find({}).populate('tags').populate('question')
+        .then(async result => {
+            try {
+                for(let tag of result){
+                    let user = await User.findById(tag.question.user);
+                    tag.question.user = user;
+                }              
+                res.json(new Response(result, true, 'success'));
+
+            }catch(err) {
+                res.json(new Response(err, false, err.message));
+            }
         })
         .catch(err => {
             res.json(new Response(err, false, err.message));
@@ -18,7 +28,7 @@ TagCtrl.getAll = (req, res) => {
 TagCtrl.getByQuestionId = (req, res) => {
     const id = req.params.id;
 
-    Tag.findOne({ question: id }).populate('tags')
+    Tag.findOne({ question: id }).populate('tags').populate('question')
         .then(result => {
             res.json(new Response(result, true, 'success'));
         }).catch(err => {
@@ -52,11 +62,11 @@ TagCtrl.update = (req, res) => {
 
 TagCtrl.addTag = (req, res) => {
     const id = req.params.id;
-    const tag = req.params.id_tag;
+    const branch = req.params.id_branch;
 
-    Tag.findByIdAndUpdate(id, { $push: { tags: tag } })
+    Tag.findByIdAndUpdate(id, { $push: { tags: branch } })
         .then(result => {
-            res.json(new Response(tag, true, 'success'));
+            res.json(new Response(branch, true, 'success'));
         })
         .catch(err => {
             res.json(new Response(err, false, err.message));
@@ -65,11 +75,11 @@ TagCtrl.addTag = (req, res) => {
 
 TagCtrl.removeTag = (req, res) => {
     const id = req.params.id;
-    const tag = req.params.id_tag;
+    const branch = req.params.id_branch;
 
-    Tag.findByIdAndUpdate(id, { $pull: { tags: tag } })
+    Tag.findByIdAndUpdate(id, { $pull: { tags: branch } })
         .then(result => {
-            res.json(new Response(tag, true, 'success'));
+            res.json(new Response(branch, true, 'success'));
         })
         .catch(err => {
             res.json(new Response(err, false, err.message));

@@ -52,11 +52,11 @@ SkillCtrl.update = (req, res) => {
 
 SkillCtrl.addSkill = (req, res) => {
     const id = req.params.id;
-    const skill = req.params.id_skill;
+    const branch = req.params.id_branch;
 
-    Skill.findByIdAndUpdate(id, { $push: { skills: skill } })
+    Skill.findByIdAndUpdate(id, { $push: { skills: branch } })
         .then(result => {
-            res.json(new Response(skill, true, 'success'));
+            res.json(new Response(branch, true, 'success'));
         })
         .catch(err => {
             res.json(new Response(err, false, err.message));
@@ -65,11 +65,11 @@ SkillCtrl.addSkill = (req, res) => {
 
 SkillCtrl.removeSkill = (req, res) => {
     const id = req.params.id;
-    const skill = req.params.id_skill;
+    const branch = req.params.id_branch;
 
-    Skill.findByIdAndUpdate(id, { $pull: { skills: skill } })
+    Skill.findByIdAndUpdate(id, { $pull: { skills: branch } })
         .then(result => {
-            res.json(new Response(skill, true, 'success'));
+            res.json(new Response(branch, true, 'success'));
         })
         .catch(err => {
             res.json(new Response(err, false, err.message));
