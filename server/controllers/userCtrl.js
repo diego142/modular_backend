@@ -52,7 +52,7 @@ UserCtrl.update = (req, res) => {
     const id = req.body._id;
     const user = req.body;
 
-    User.find(id, { $set: user })
+    User.findByIdAndUpdate(id, { $set: user })
         .then(result => {
             res.json(new Response(user, true, 'success'));
         }).catch(err => {
