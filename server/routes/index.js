@@ -5,6 +5,7 @@ const eventRouter = require('./event.routes');
 const branchRouter = require('./branch.routes');
 const tagRouter = require('./tag.routes');
 const skillRouter = require('./skill.routes');
+const NLRoute = require('./NL.routes');
 
 const router = express.Router();
 
@@ -18,5 +19,6 @@ router.use('/foroqci/api/event', eventRouter);
 router.use('/foroqci/api/branch', branchRouter);
 router.use('/foroqci/api/tag', tagRouter);
 router.use('/foroqci/api/skill', skillRouter);
+router.use('/foroqci/api/nl', NLRoute);
 
 module.exports = router;

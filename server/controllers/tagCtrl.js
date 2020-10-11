@@ -6,8 +6,10 @@ const { request } = require('express');
 const TagCtrl = {};
 
 TagCtrl.getAll = (req, res) => {
+
     Tag.find({}).populate('tags').populate('question')
         .then(async result => {
+
             try {
                 for(let tag of result){
                     let user = await User.findById(tag.question.user);
