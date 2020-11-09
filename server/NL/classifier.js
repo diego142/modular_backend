@@ -6,15 +6,15 @@ const fs = require('fs');
 
 const classifier = new Natural.BayesClassifier(PorterStemmerEs);
 
-const programming = fs.readFileSync(path.join(__dirname, 'dic_programming.txt'), 'utf-8');
-const math = fs.readFileSync(path.join(__dirname, 'dic_math.txt'), 'utf-8');
-const electronics = fs.readFileSync(path.join(__dirname, 'dic_electronics.txt'), 'utf-8');
-const communications = fs.readFileSync(path.join(__dirname, 'dic_communications.txt'), 'utf-8');
-const systems = fs.readFileSync(path.join(__dirname, 'dic_systems.txt'), 'utf-8');
-const security = fs.readFileSync(path.join(__dirname, 'dic_security.txt'), 'utf-8');
-const biotechnology = fs.readFileSync(path.join(__dirname, 'dic_biotechnology.txt'), 'utf-8');
-const optics = fs.readFileSync(path.join(__dirname, 'dic_optics.txt'), 'utf-8');
-const robotics = fs.readFileSync(path.join(__dirname, 'dic_robotics.txt'), 'utf-8');
+const programming = fs.readFileSync(path.join(__dirname, 'PROGRAMACION.txt'), 'utf-8');
+const math = fs.readFileSync(path.join(__dirname, 'MATEMATICAS.txt'), 'utf-8');
+const electronics = fs.readFileSync(path.join(__dirname, 'ELECTRONICA.txt'), 'utf-8');
+const communications = fs.readFileSync(path.join(__dirname, 'COMUNICACIONES.txt'), 'utf-8');
+const systems = fs.readFileSync(path.join(__dirname, 'SISTEMAS.txt'), 'utf-8');
+const security = fs.readFileSync(path.join(__dirname, 'SEGURIDAD.txt'), 'utf-8');
+const biotechnology = fs.readFileSync(path.join(__dirname, 'BIOTECNOLOGIA.txt'), 'utf-8');
+const optics = fs.readFileSync(path.join(__dirname, 'OPTICA.txt'), 'utf-8');
+const robotics = fs.readFileSync(path.join(__dirname, 'ROBOTICA.txt'), 'utf-8');
 
 classifier.addDocument(programming, 'PROGRAMACION');
 classifier.addDocument(math, 'MATEMATICAS');
@@ -27,6 +27,13 @@ classifier.addDocument(optics, 'OPTICA');
 classifier.addDocument(robotics, 'ROBOTICA');
 
 classifier.train();
+
+classifier.addNewWord = (words, branch) => {
+    words = words.toUpperCase();
+    fs.appendFileSync(path.join(__dirname, `${branch}.txt`), ` ${words}`);
+    classifier.addDocument(words, branch);
+    classifier.train();
+};
 
 classifier.cleanStopWords = (question) => {
     // remove accents

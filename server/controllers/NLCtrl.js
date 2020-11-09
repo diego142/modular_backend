@@ -54,4 +54,21 @@ NLCtrl.getQuestions = async (req, res) => {
     }
 };
 
+NLCtrl.addNewWord = async (req, res) => {
+    const branches = req.body.branches;
+    let words =  req.body.words;
+    words = classifier.cleanStopWords(words);
+
+    try{
+        for (const branch of branches) {
+            classifier.addNewWord(words, branch);
+        }
+
+        res.json(new Response('', true, 'success'));
+    }catch(err){
+        res.json(new Response(err, false, err.message));
+    }
+
+};
+
 module.exports = NLCtrl;
