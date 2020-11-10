@@ -5,26 +5,19 @@ var path = require('path');
 const fs = require('fs');
 
 const classifier = new Natural.BayesClassifier(PorterStemmerEs);
+var files = fs.readdirSync(__dirname, (err, files) => {
+    if (err) {
+        onError(err);
+        return;
+    }
+});
 
-const programming = fs.readFileSync(path.join(__dirname, 'PROGRAMACION.txt'), 'utf-8');
-const math = fs.readFileSync(path.join(__dirname, 'MATEMATICAS.txt'), 'utf-8');
-const electronics = fs.readFileSync(path.join(__dirname, 'ELECTRONICA.txt'), 'utf-8');
-const communications = fs.readFileSync(path.join(__dirname, 'COMUNICACIONES.txt'), 'utf-8');
-const systems = fs.readFileSync(path.join(__dirname, 'SISTEMAS.txt'), 'utf-8');
-const security = fs.readFileSync(path.join(__dirname, 'SEGURIDAD.txt'), 'utf-8');
-const biotechnology = fs.readFileSync(path.join(__dirname, 'BIOTECNOLOGIA.txt'), 'utf-8');
-const optics = fs.readFileSync(path.join(__dirname, 'OPTICA.txt'), 'utf-8');
-const robotics = fs.readFileSync(path.join(__dirname, 'ROBOTICA.txt'), 'utf-8');
-
-classifier.addDocument(programming, 'PROGRAMACION');
-classifier.addDocument(math, 'MATEMATICAS');
-classifier.addDocument(electronics, 'ELECTRONICA');
-classifier.addDocument(communications, 'COMUNICACIONES');
-classifier.addDocument(systems, 'SISTEMAS');
-classifier.addDocument(security, 'SEGURIDAD');
-classifier.addDocument(biotechnology, 'BIOTECNOLOGIA');
-classifier.addDocument(optics, 'OPTICA');
-classifier.addDocument(robotics, 'ROBOTICA');
+for (let file of files) {
+    if (file.includes('.txt')) {
+        let text = fs.readFileSync(path.join(__dirname, file), 'utf-8');
+        classifier.addDocument(text, file.split('.txt')[0]);
+    }
+}
 
 classifier.train();
 
@@ -46,7 +39,7 @@ classifier.cleanStopWords = (question) => {
     question = question.split(' ');
     question = question.filter(word => !stopwords.includes(word));
 
-    return question.join(' ');
+    return question.join(' ').trim();
 };
 
 classifier.cleanClassifications = (classifications) => {

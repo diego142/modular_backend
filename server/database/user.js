@@ -10,6 +10,7 @@ const UserSchema = new Schema({
     career: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
+    permission: { type: Number, required: true },
     active: { type: Boolean, required: true }
 });
 

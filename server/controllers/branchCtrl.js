@@ -14,6 +14,18 @@ BranchCtrl.getAll = (req, res) => {
         });
 };
 
+BranchCtrl.getById = (req, res) => {
+    const id = req.params.id;
+
+    Branch.findOne({ _id: id })
+        .then(result => {
+            res.json(new Response(result, true, 'success'));
+        })
+        .catch(err => {
+            res.json(new Response(err, false, err.message));
+        });
+};
+
 BranchCtrl.create = (req, res) => {
     const branch = new Branch(req.body);
 

@@ -60,10 +60,22 @@ UserCtrl.update = (req, res) => {
         });
 };
 
+UserCtrl.updatePermission = (req, res) => {
+    const id = req.body.id;
+    const perm = req.body.permission;
+
+    User.findByIdAndUpdate(id, { $set: { permission: perm} })
+        .then(result => {
+            res.json(new Response(result, true, 'success'));
+        }).catch(err => {
+            res.json(new Response(err, false, err.message));
+        });
+};
+
 UserCtrl.delete = (req, res) => {
     const id = req.params.id;
 
-    User.findByIdAndUpdate(id, { $set: { active: false } })
+    User.findByIdAndUpdate(id, { $set: { active: false, permission: 0 } })
         .then(result => {
             result.active = false;
             res.json(new Response(result, true, 'success'));
@@ -71,6 +83,5 @@ UserCtrl.delete = (req, res) => {
             res.json(new Response(err, false, err.message));
         });
 };
-
 
 module.exports = UserCtrl;
