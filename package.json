@@ -21,6 +21,7 @@
     "express": "^4.17.1",
     "mongoose": "^5.10.1",
     "natural": "^2.1.5",
+    "nodemailer": "^6.4.16",
     "stopwords": "0.0.9"
   },
   "devDependencies": {

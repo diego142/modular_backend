@@ -4,7 +4,7 @@ const Response = require('../models/response');
 const EventCtrl = {};
 
 EventCtrl.getAll = (req, res) => {
-    Event.find({ open: true }).populate("user")
+    Event.find({open: true}).populate("user")
         .then(result => {
             res.json(new Response(result, true, 'success'));
         })
