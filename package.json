@@ -4,9 +4,8 @@
   "description": "Backend del proyecto modular",
   "main": "index.js",
   "scripts": {
-    "start": "node server/index.js",
-    "dev": "nodemon server/index.js"
-  },
+    "start": "node server/index.js"
+    },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/diego142/modular_backend.git"
