@@ -1,12 +1,16 @@
 const express = require('express');
 const cors = require('cors');
-var os = require("os");
+const path = require('path');
+
 const { mongoose } = require('./database/db');
 
 const app = express();
 
 // Settings
 app.set('port', process.env.PORT || 3000);
+
+//static files
+app.use(express.static(path.join(__dirname, 'www')));
 
 // Middlewares
 app.use(express.json());

@@ -16,7 +16,7 @@ module.exports = class Email {
             subject: 'Bienvenido al foro Qci',
             html: `
             <div style="font-family:Consolas;">
-                <h1 style="color: rgb(55, 59, 92)">Hola <i>${user.name} ${user.lastName}</i>, felicidades has creado tú cuenta en ForoQci.</h1>
+                <h1 style="color: rgb(55, 59, 92)">Hola <i>${user.name} ${user.lastName}</i>, felicidades has creado tu cuenta en ForoQci.</h1>
                 <h2 style="color: darkblue">Ya puedes iniciar sesión con el e-mail: <i style="color: cadetblue">${user.email}.</i></h2>
                 <h2 style="color: darkblue">No olvides llenar todos tus datos en tu perfil.</h2>
                 <u>No responder a este correo.</u>

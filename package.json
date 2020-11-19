@@ -4,6 +4,7 @@
   "description": "Backend del proyecto modular",
   "main": "index.js",
   "scripts": {
+    "start": "node server/index.js",
     "dev": "nodemon server/index.js"
   },
   "repository": {
