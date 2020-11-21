@@ -1,0 +1,5 @@
+heroku login
+heroku git:remote -a foroqci
+git add .
+git commit -am ""
+git push heroku master
